@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Meeting to Scope</title>
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#666;--card:#f5f5f7;--acc:#2f5bea;--bad:#c2410c;--ok:#15803d;--warn:#b45309}
+@media(prefers-color-scheme:dark){:root{--bg:#161618;--fg:#eee;--mut:#9a9a9a;--card:#232326;--acc:#7a9bff;--bad:#f59e6b;--ok:#4ade80;--warn:#f0a43c}}
+*{box-sizing:border-box}body{font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg);max-width:1000px;margin:0 auto;padding:1rem}
+textarea,input,select{width:100%;font:inherit;padding:.55rem;background:var(--card);color:var(--fg);border:1px solid #8884;border-radius:8px;margin-top:.3rem}
+button{background:var(--acc);color:#fff;border:0;padding:.5rem .9rem;border-radius:8px;font:inherit;cursor:pointer;margin:.4rem .3rem 0 0}button.sec{background:var(--card);color:var(--fg);border:1px solid #8884}button:disabled{opacity:.4;cursor:not-allowed}
+.card{background:var(--card);border-radius:10px;padding:.8rem 1rem;margin:.8rem 0}.mut{color:var(--mut);font-size:.85rem}.tag{font-size:.75rem;padding:.1rem .45rem;border-radius:99px;background:#8883;margin-right:.3rem}
+table{width:100%;border-collapse:collapse}td,th{padding:.35rem .4rem;border-bottom:1px solid #8883;text-align:left;vertical-align:top;font-size:.9rem}.banner{padding:.7rem 1rem;border-radius:8px;background:#c2410c22;color:var(--bad);font-weight:600;margin:.6rem 0}
+.added{color:var(--ok)}.removed{color:var(--bad)}.modified{color:var(--warn)}.wrap{overflow-x:auto}
+</style></head><body>
+<h1>Meeting to Scope</h1>
+<div class="card"><b>1. Project</b><select id="proj" onchange="loadProj()"></select>
+<input id="pname" placeholder="New project name"><input id="pclient" placeholder="Client"><button class="sec" onclick="newProj()">Create project</button></div>
+<div class="card"><b>2. Add a meeting transcript</b><input id="mtitle" placeholder="Meeting title"><input id="mdate" type="date"><textarea id="mtext" rows="6" placeholder="Paste transcript (one line per turn)"></textarea>
+<button onclick="addMeeting()">Save &amp; process</button><span id="state" class="mut"></span></div>
+<div id="versions"></div><div id="view"></div>
+<script>
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const api=async(p,b)=>{const r=await fetch(p,b!==undefined?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}:{});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.detail||r.status);return j};
+const list=a=>'<ul>'+(a||[]).map(x=>`<li>${esc(x)}</li>`).join('')+'</ul>';
+async function loadProjects(){const p=await api('/projects');$('proj').innerHTML=p.map(x=>`<option value="${x.id}">${esc(x.name)} — ${esc(x.client)}</option>`).join('');if(p.length)loadProj()}
+async function newProj(){await api('/projects',{name:$('pname').value,client:$('pclient').value});await loadProjects()}
+async function loadProj(){const pid=$('proj').value;if(!pid)return;const v=await api(`/projects/${pid}/versions`);
+ $('versions').innerHTML='<div class="card"><b>Versions</b> '+(v.map(x=>`<button class="sec" onclick="show(${x.id})">v${x.version_no} · ${esc(x.status)}${x.sent_at?' · sent':''}</button>`).join('')||'<span class="mut">none yet</span>')+'</div>';if(v[0])show(v[0].id)}
+async function addMeeting(){const pid=$('proj').value;$('state').textContent=' Processing (this takes a minute)…';try{
+ const m=await api(`/projects/${pid}/meetings`,{title:$('mtitle').value,meeting_date:$('mdate').value,transcript:$('mtext').value});
+ const r=await api(`/projects/${pid}/meetings/${m.id}/process`,{});$('state').textContent='';await loadProj();show(r.version_id)}catch(e){$('state').textContent='';$('view').innerHTML=`<div class="banner">Could not process: ${esc(e.message)}. Nothing was saved as a draft.</div>`}}
+async function show(vid){const v=await api('/versions/'+vid),cr=v.change_report,s=v.scope,e=v.estimate,p=v.proposal,t=e.totals;
+ const issues=v.issues&&v.issues.length?`<div class="banner">Review before approving:${list(v.issues)}</div>`:'';
+ const change=cr?`<div class="card"><h3>Changes vs approved v${cr.baseline_version}</h3><div class="mut">${Object.entries(cr.items.reduce((a,i)=>(a[i.kind]=(a[i.kind]||0)+1,a),{})).map(([k,n])=>k+': '+n).join(' · ')}</div><table>${cr.items.filter(i=>i.kind!=='unchanged').map(i=>`<tr><td class="${i.kind}"><b>${i.kind.toUpperCase()}</b></td><td>${esc(i.requirement_id)}</td><td>${esc(i.description)}<div class="mut">${esc(i.detail)} ${i.out_of_scope?'<b>· OUT OF SCOPE: quote separately</b>':''}</div></td></tr>`).join('')}</table>${cr.date_or_budget_changes.length?'<b>Date / budget mentions</b>'+list(cr.date_or_budget_changes):''}</div>`:'';
+ $('view').innerHTML=`${issues}<div class="card"><b>Version ${v.version_no}</b> <span class="tag">${esc(v.status)}</span>${v.approved_by?`<span class="mut">approved by ${esc(v.approved_by)} at ${esc(v.approved_at)}</span>`:''}
+ <div><input id="rev" placeholder="Reviewer name" style="max-width:240px;display:inline-block"> <label><input type="checkbox" id="ack" style="width:auto"> I reviewed the issues</label>
+ <button onclick="approve(${vid})" ${v.status!=='draft'?'disabled':''}>Approve</button><button class="sec" onclick="send(${vid})" ${v.status!=='approved'?'disabled title="Approve first"':''}>Send to client (simulated)</button><span id="amsg" class="mut"></span></div></div>
+ ${change}
+ <div class="card wrap"><h3>Requirements</h3><table><tr><th>ID</th><th>Requirement</th><th>Status</th><th>Product check</th><th>Evidence</th></tr>${v.requirements.map(r=>`<tr><td>${esc(r.id)}</td><td>${r.removed?'<s>'+esc(r.description)+'</s> (removed)':esc(r.description)}<div class="mut">${esc(r.origin)} · ${esc(r.priority)}</div>${(r.open_questions||[]).map(q=>`<div class="mut">? ${esc(q)}</div>`).join('')}</td><td>${esc(r.status)}</td><td>${esc(r.feasibility||'-')}<div class="mut">${esc(r.feasibility_note)}</div></td><td>${(r.evidence||[]).map(x=>`<div class="mut">${x.verified?'✔':'⚠ unverified'} ${esc(x.lines)}: “${esc(x.quote)}”</div>`).join('')}</td></tr>`).join('')}</table></div>
+ <div class="card wrap"><h3>Estimate</h3><table><tr><th>Req</th><th>Task</th><th>Low</th><th>Likely</th><th>High</th><th>Assumptions</th></tr>${e.tasks.map(x=>`<tr><td>${esc(x.requirement_id)}</td><td>${esc(x.task)}</td><td>${x.low_h}</td><td>${x.likely_h}</td><td>${x.high_h}</td><td class="mut">${esc(x.assumptions)} (${esc(x.confidence)})</td></tr>`).join('')}<tr><th></th><th>Total hours</th><th>${t.low}</th><th>${t.likely}</th><th>${t.high}</th><th></th></tr></table><p class="mut">Indicative price at configured rate: ${t.price_low} – ${t.price_high} ${esc(t.currency)} (likely ${t.price_likely}). Not a quote until approved.</p></div>
+ <div class="card"><h3>Scope of work</h3><p><b>Objective:</b> ${esc(s.objective)}</p><p><b>Problem:</b> ${esc(s.current_problem)}</p><b>Agreed requirements</b>${list(s.agreed_requirements)}<b>Deliverables</b>${list(s.deliverables)}<b>Exclusions</b>${list(s.exclusions)}<b>Acceptance criteria</b>${list(s.acceptance_criteria)}<b>Assumptions</b>${list(s.assumptions)}<b>Client responsibilities</b>${list(s.client_responsibilities)}<b>Open questions</b>${list(s.open_questions)}<b>Risks</b>${list(s.risks)}</div>
+ <div class="card"><h3>Proposal draft</h3>${Object.entries(p).map(([k,x])=>`<h4>${esc(k.replace(/_/g,' '))}</h4><p style="white-space:pre-wrap">${esc(x)}</p>`).join('')}</div>`}
+async function approve(vid){try{await api(`/versions/${vid}/approve`,{reviewer:$('rev').value,acknowledge_issues:$('ack').checked});await loadProj()}catch(e){$('amsg').textContent=' '+e.message}}
+async function send(vid){try{await api(`/versions/${vid}/send`,{});$('amsg').textContent=' Sent (simulated).';await loadProj()}catch(e){$('amsg').textContent=' '+e.message}}
+loadProjects();
+</script></body></html>

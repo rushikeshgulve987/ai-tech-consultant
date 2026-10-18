@@ -1,0 +1,26 @@
+Consultant: Thanks for joining, Priya. Tell me what's not working on your directory site right now.
+Priya: Honestly, search. Customers can't find the right vendor fast. They type something and get a long messy list.
+Consultant: Can you give me an example of a bad search?
+Priya: Someone looks for "wedding photographer Pune" and gets florists and caterers mixed in.
+Consultant: Understood. What would good look like for you?
+Priya: I want filters. Location, price range, and maybe rating. Customers should narrow things down quickly.
+Consultant: Those three filters, location, price and rating, are you confident about all three?
+Priya: Location and price are must-haves. Rating, I'm not sure, maybe later.
+Consultant: Okay. How many vendors are listed today?
+Priya: Around 1,800 listings, growing by maybe 100 a month.
+Consultant: And on mobile? You mentioned a complaint earlier by email.
+Priya: Yes, the mobile menu is clumsy. On phones the search box is hidden under a hamburger menu. Most of our traffic is mobile, so the search box should be visible on the homepage.
+Consultant: Got it, search box visible on mobile homepage. Anything else?
+Priya: Maybe we should add AI somehow. A smart search that understands what people mean.
+Consultant: What does AI search mean to you, concretely?
+Priya: I don't know exactly. Something like ChatGPT but for our vendors. We can discuss it later.
+Consultant: Fine, I'll mark that as open. Do you have a deadline in mind?
+Priya: We have a wedding expo on the 20th of November, so I'd love the filters live before that.
+Consultant: And budget?
+Priya: Nothing fixed yet. Tell me what it costs and I'll decide.
+Consultant: Who will give us access to the site and the hosting account?
+Priya: I can do that, my developer Arjun has the admin login.
+Consultant: Last question: do you want the vendor profile pages changed at all?
+Priya: No, profile pages are fine. Leave them as they are.
+Consultant: Great. I'll write this up and send a scope with estimates.
+Priya: Perfect. Please keep it simple, I'm not technical.

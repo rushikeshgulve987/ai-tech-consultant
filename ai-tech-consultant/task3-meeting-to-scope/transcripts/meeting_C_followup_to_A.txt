@@ -1,0 +1,18 @@
+Consultant: Hi Priya, thanks for the second call. Let's go over what changed since last time.
+Priya: Yes, we thought about it. First, the rating filter, we now definitely want it. Location, price and rating, all three.
+Consultant: Rating filter is now confirmed. Anything else on search?
+Priya: Yes, a new thing. Vendors should be able to mark themselves as "featured" and appear at the top of search results. They'd pay extra for that.
+Consultant: Featured vendor placement, that's new. Do you want payment for it handled in the site?
+Priya: Yes, through the existing payment setup.
+Consultant: Okay. What about the mobile search box?
+Priya: Still needed, search box visible on the mobile homepage. That stays.
+Consultant: And the AI search idea?
+Priya: Drop it. Too expensive for now. Forget the AI search completely.
+Consultant: Noted, AI search removed. And the deadline?
+Priya: The expo got moved. Now it's the 5th of December, so we have a bit more time.
+Consultant: And budget?
+Priya: I can spend up to 1,500 dollars for everything.
+Consultant: Understood. Profile pages are still unchanged?
+Priya: Yes, leave profile pages alone.
+Consultant: One last thing, are you okay if we also redesign the homepage banner?
+Priya: Hmm, maybe. I'm not sure. Let's park that.

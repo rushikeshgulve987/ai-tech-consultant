@@ -1,0 +1,502 @@
+[
+ {
+  "id": "IN-001",
+  "split": "dev",
+  "subject": "Changing my site logo",
+  "body": "Hi, I just launched my directory and I can't work out how to replace the default logo with ours. Where do I upload it?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer1@example.com"
+ },
+ {
+  "id": "IN-002",
+  "split": "test",
+  "subject": "Adding a new membership level",
+  "body": "How do I create a second membership plan with a higher price and extra features for my members?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer2@example.com"
+ },
+ {
+  "id": "IN-003",
+  "split": "dev",
+  "subject": "Change the homepage hero text",
+  "body": "Where can I edit the big heading and search box text on my homepage?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer3@example.com"
+ },
+ {
+  "id": "IN-004",
+  "split": "dev",
+  "subject": "Setting up PayPal",
+  "body": "We want members to pay via PayPal. Which settings do I need to switch on?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer4@example.com"
+ },
+ {
+  "id": "IN-005",
+  "split": "dev",
+  "subject": "Export member list",
+  "body": "Can I download all my members as a CSV? I need it for a mailing.",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer5@example.com"
+ },
+ {
+  "id": "IN-006",
+  "split": "test",
+  "subject": "Custom domain",
+  "body": "I bought a domain at GoDaddy. How do I point my directory at it?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer6@example.com"
+ },
+ {
+  "id": "IN-007",
+  "split": "dev",
+  "subject": "Email notification templates",
+  "body": "How can I change the welcome email that new members get?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer7@example.com"
+ },
+ {
+  "id": "IN-008",
+  "split": "dev",
+  "subject": "Adding a menu item",
+  "body": "I'd like a new 'Events' link in the top menu. How?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer8@example.com"
+ },
+ {
+  "id": "IN-009",
+  "split": "dev",
+  "subject": "Limiting photos per listing",
+  "body": "Is there a setting to cap how many photos a member can upload?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer9@example.com"
+ },
+ {
+  "id": "IN-010",
+  "split": "dev",
+  "subject": "Approve listings manually",
+  "body": "I want to review every new listing before it goes live. Is that possible?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer10@example.com"
+ },
+ {
+  "id": "IN-011",
+  "split": "dev",
+  "subject": "Category pages SEO",
+  "body": "How do I edit the page title and description for a category page?",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": false,
+  "from": "customer11@example.com"
+ },
+ {
+  "id": "IN-012",
+  "split": "dev",
+  "subject": "Does it support Klarna?",
+  "body": "Can members pay for plans using Klarna buy-now-pay-later? Couldn't find it anywhere.",
+  "category": "how_to",
+  "risk": "low",
+  "shouldEscalate": true,
+  "from": "customer12@example.com"
+ },
+ {
+  "id": "IN-013",
+  "split": "test",
+  "subject": "Payments stopped working",
+  "body": "Since this morning members get an error at checkout with Stripe. We're losing sign-ups. What should I check?",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer13@example.com"
+ },
+ {
+  "id": "IN-014",
+  "split": "dev",
+  "subject": "Can't log in to admin",
+  "body": "I reset my password but the admin login still says invalid credentials.",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer14@example.com"
+ },
+ {
+  "id": "IN-015",
+  "split": "test",
+  "subject": "Search returns nothing",
+  "body": "Our member search page shows no results even though we have 300 members. Settings unchanged.",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer15@example.com"
+ },
+ {
+  "id": "IN-016",
+  "split": "dev",
+  "subject": "Emails going to spam",
+  "body": "Welcome emails sent to new members land in spam. Any settings to fix it?",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer16@example.com"
+ },
+ {
+  "id": "IN-017",
+  "split": "dev",
+  "subject": "Images not uploading",
+  "body": "Members get 'upload failed' when adding photos bigger than 2MB.",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer17@example.com"
+ },
+ {
+  "id": "IN-018",
+  "split": "dev",
+  "subject": "Map not loading",
+  "body": "The map on listing pages is blank with a grey box.",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer18@example.com"
+ },
+ {
+  "id": "IN-019",
+  "split": "test",
+  "subject": "Widget broke after edit",
+  "body": "I edited a widget's HTML and now the sidebar is gone. How do I restore it?",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer19@example.com"
+ },
+ {
+  "id": "IN-020",
+  "split": "dev",
+  "subject": "Mobile menu doesn't open",
+  "body": "On iPhone the hamburger menu does nothing.",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer20@example.com"
+ },
+ {
+  "id": "IN-021",
+  "split": "dev",
+  "subject": "Duplicate charge",
+  "body": "A member says they were charged twice for the same plan this month. How do I check in the dashboard?",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer21@example.com"
+ },
+ {
+  "id": "IN-022",
+  "split": "dev",
+  "subject": "Intermittent 500 error on our custom API integration",
+  "body": "Our own server calling your platform with a custom webhook sometimes gets a 500 around midnight. No docs mention this.",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "shouldEscalate": true,
+  "from": "customer22@example.com"
+ },
+ {
+  "id": "IN-023",
+  "split": "test",
+  "subject": "Booking feature",
+  "body": "Can you build an appointment booking feature so members can schedule with clients? We'd want calendar sync too.",
+  "category": "project_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer23@example.com"
+ },
+ {
+  "id": "IN-024",
+  "split": "dev",
+  "subject": "Custom dashboard for members",
+  "body": "We'd like a custom member dashboard showing their lead stats. Is that something you can build?",
+  "category": "project_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer24@example.com"
+ },
+ {
+  "id": "IN-025",
+  "split": "test",
+  "subject": "Migrate from WordPress",
+  "body": "We have 2,000 listings on WordPress. Can you migrate them over and keep our URLs?",
+  "category": "project_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer25@example.com"
+ },
+ {
+  "id": "IN-026",
+  "split": "dev",
+  "subject": "Add a mobile app",
+  "body": "Do you build iOS and Android apps for our directory?",
+  "category": "project_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer26@example.com"
+ },
+ {
+  "id": "IN-027",
+  "split": "dev",
+  "subject": "Better search with filters",
+  "body": "Our search is weak. We want filters by price, location and rating, and maybe some AI. Can you help?",
+  "category": "project_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer27@example.com"
+ },
+ {
+  "id": "IN-028",
+  "split": "dev",
+  "subject": "Multi-language site",
+  "body": "We need the site in English and Spanish. What would it take?",
+  "category": "project_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer28@example.com"
+ },
+ {
+  "id": "IN-029",
+  "split": "test",
+  "subject": "Cancel my plan",
+  "body": "Please cancel my subscription effective today and refund this month's payment.",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer29@example.com"
+ },
+ {
+  "id": "IN-030",
+  "split": "dev",
+  "subject": "Refund for accidental renewal",
+  "body": "My annual plan renewed yesterday and I didn't mean to keep it. Can I get my money back?",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer30@example.com"
+ },
+ {
+  "id": "IN-031",
+  "split": "dev",
+  "subject": "Cancel before next billing",
+  "body": "How do I cancel before my next billing date? No refund needed.",
+  "category": "refund_cancellation",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer31@example.com"
+ },
+ {
+  "id": "IN-032",
+  "split": "dev",
+  "subject": "Refund after 5 months",
+  "body": "I've been unhappy since January. I want a full refund for the last 5 months.",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer32@example.com"
+ },
+ {
+  "id": "IN-033",
+  "split": "dev",
+  "subject": "Chargeback warning",
+  "body": "If I don't get a refund today I will dispute the charge with my bank.",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer33@example.com"
+ },
+ {
+  "id": "IN-034",
+  "split": "test",
+  "subject": "Downgrade not cancel",
+  "body": "I want to move to the cheaper plan, not cancel. Will I get the difference back?",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer34@example.com"
+ },
+ {
+  "id": "IN-035",
+  "split": "dev",
+  "subject": "Your update broke our site",
+  "body": "Your latest update broke our checkout and we lost orders all afternoon. This is unacceptable.",
+  "category": "complaint",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer35@example.com"
+ },
+ {
+  "id": "IN-036",
+  "split": "dev",
+  "subject": "Support never answers",
+  "body": "I've waited 4 days for a reply to my ticket. Terrible service.",
+  "category": "complaint",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer36@example.com"
+ },
+ {
+  "id": "IN-037",
+  "split": "test",
+  "subject": "Misleading pricing",
+  "body": "The pricing page said unlimited listings but I hit a cap. I feel misled.",
+  "category": "complaint",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer37@example.com"
+ },
+ {
+  "id": "IN-038",
+  "split": "dev",
+  "subject": "Data missing after migration",
+  "body": "After your migration half my member photos are gone. I'm furious.",
+  "category": "complaint",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer38@example.com"
+ },
+ {
+  "id": "IN-039",
+  "split": "dev",
+  "subject": "Rude agent",
+  "body": "The agent I spoke to yesterday was dismissive and unhelpful.",
+  "category": "complaint",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer39@example.com"
+ },
+ {
+  "id": "IN-040",
+  "split": "dev",
+  "subject": "Disappointed with performance",
+  "body": "The site has been very slow for weeks. I'm disappointed and considering leaving.",
+  "category": "complaint",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer40@example.com"
+ },
+ {
+  "id": "IN-041",
+  "split": "dev",
+  "subject": "Quote for custom checkout",
+  "body": "How much would it cost to customise our checkout flow with a coupon field?",
+  "category": "quote_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer41@example.com"
+ },
+ {
+  "id": "IN-042",
+  "split": "test",
+  "subject": "Price for extra storage",
+  "body": "What would you charge for 50GB extra image storage?",
+  "category": "quote_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer42@example.com"
+ },
+ {
+  "id": "IN-043",
+  "split": "dev",
+  "subject": "Cost of a custom report",
+  "body": "We need a monthly custom report of member activity. What would that cost?",
+  "category": "quote_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer43@example.com"
+ },
+ {
+  "id": "IN-044",
+  "split": "dev",
+  "subject": "Quote: SSO integration",
+  "body": "Can you quote us for Google SSO sign-in for members?",
+  "category": "quote_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer44@example.com"
+ },
+ {
+  "id": "IN-045",
+  "split": "dev",
+  "subject": "Estimate for redesign",
+  "body": "What's the ballpark price to redesign our homepage?",
+  "category": "quote_request",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer45@example.com"
+ },
+ {
+  "id": "IN-046",
+  "split": "test",
+  "subject": "Did you get my request?",
+  "body": "I emailed on Monday about the booking feature and haven't heard back. Did you receive it?",
+  "category": "follow_up",
+  "risk": "medium",
+  "shouldEscalate": true,
+  "from": "customer46@example.com"
+ },
+ {
+  "id": "IN-047",
+  "split": "dev",
+  "subject": "Following up on logo issue",
+  "body": "Just following up: the logo still shows the old version after I uploaded the new one.",
+  "category": "follow_up",
+  "risk": "medium",
+  "shouldEscalate": false,
+  "from": "customer47@example.com"
+ },
+ {
+  "id": "IN-048",
+  "split": "dev",
+  "subject": "Any update on my quote?",
+  "body": "Checking in on the quote you were preparing for the SSO work.",
+  "category": "follow_up",
+  "risk": "medium",
+  "shouldEscalate": true,
+  "from": "customer48@example.com"
+ },
+ {
+  "id": "IN-049",
+  "split": "dev",
+  "subject": "Re: refund request",
+  "body": "Any update on my refund request from last week?",
+  "category": "follow_up",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer49@example.com"
+ },
+ {
+  "id": "IN-050",
+  "split": "dev",
+  "subject": "Still waiting on migration",
+  "body": "It's been two weeks since we agreed the migration. When will it start?",
+  "category": "follow_up",
+  "risk": "high",
+  "shouldEscalate": true,
+  "from": "customer50@example.com"
+ }
+]

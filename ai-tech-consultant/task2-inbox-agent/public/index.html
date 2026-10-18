@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inbox Agent</title>
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#666;--card:#f5f5f7;--acc:#2f5bea;--bad:#c2410c;--ok:#15803d}
+@media(prefers-color-scheme:dark){:root{--bg:#161618;--fg:#eee;--mut:#9a9a9a;--card:#232326;--acc:#7a9bff;--bad:#f59e6b;--ok:#4ade80}}
+*{box-sizing:border-box}body{font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg);margin:0}
+header{padding:.8rem 1rem;border-bottom:1px solid #8883;display:flex;justify-content:space-between;align-items:center}
+main{display:grid;grid-template-columns:320px 1fr;min-height:calc(100vh - 56px)}@media(max-width:800px){main{grid-template-columns:1fr}}
+#list{border-right:1px solid #8883;overflow:auto}.item{padding:.7rem 1rem;border-bottom:1px solid #8882;cursor:pointer}.item:hover,.item.sel{background:var(--card)}
+.tag{font-size:.75rem;padding:.1rem .45rem;border-radius:99px;background:var(--card);margin-right:.3rem}.high{color:var(--bad)}.mut{color:var(--mut);font-size:.85rem}
+#detail{padding:1rem;max-width:820px}textarea,input{width:100%;font:inherit;padding:.6rem;background:var(--card);color:var(--fg);border:1px solid #8884;border-radius:8px}
+button{background:var(--acc);color:#fff;border:0;padding:.5rem .9rem;border-radius:8px;font:inherit;cursor:pointer;margin:.4rem .3rem 0 0}button.sec{background:var(--card);color:var(--fg);border:1px solid #8884}
+.card{background:var(--card);border-radius:10px;padding:.8rem 1rem;margin:.8rem 0}.banner{padding:.7rem 1rem;border-radius:8px;background:#c2410c22;color:var(--bad);font-weight:600}
+dialog{border-radius:12px;max-width:560px;background:var(--bg);color:var(--fg)}
+</style></head><body>
+<header><b>Inbox Agent</b><span><button class="sec" onclick="newEmail()">+ Simulate email</button><button class="sec" onclick="showAuto()">Autonomy</button></span></header>
+<main><div id="list"></div><div id="detail"><p class="mut">Pick an email.</p></div></main>
+<dialog id="dlg"></dialog>
+<script>
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const api=async(p,b)=>{const r=await fetch(p,b?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}:{});const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j};
+let sel=null;
+async function load(){const l=await api('/api/inbox');$('list').innerHTML=l.map(d=>`<div class="item ${d.id===sel?'sel':''}" onclick="open_(${d.id})"><div><b>${esc(d.subject)}</b></div><div class="mut">${esc(d.from_addr)}</div><span class="tag">${esc(d.category)}</span><span class="tag ${d.risk==='high'?'high':''}">risk ${esc(d.risk)}</span><span class="tag">${esc(d.status)}</span>${d.audit?'<span class="tag">audit</span>':''}</div>`).join('')||'<p class="mut" style="padding:1rem">No emails yet.</p>'}
+async function open_(id){sel=id;const d=await api('/api/drafts/'+id);const src=JSON.parse(d.sources||'[]'),flags=JSON.parse(d.flags||'[]');load();
+ const banner=d.status==='knowledge_unavailable'?'<div class="banner">Knowledge service unavailable — no draft was generated. Reply manually or retry later.</div>':d.status==='needs_expert'?'<div class="banner">No documented evidence — holding reply only. Escalated to an expert.</div>':'';
+ $('detail').innerHTML=`${banner}<h3>${esc(d.subject)}</h3><div class="mut">From ${esc(d.from_addr)} · ${esc(d.category)} · risk ${esc(d.risk)} · urgency ${esc(d.urgency)}</div><div class="card" style="white-space:pre-wrap">${esc(d.body)}</div>
+ <h4>Evidence</h4><div class="card">${src.length?src.map(s=>`<div><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></div>`).join(''):'<span class="mut">None (kb: '+esc(d.kb_status)+')</span>'}</div>
+ ${flags.length?`<div class="banner">Policy flags: ${esc(flags.join(', '))} — check before sending.</div>`:''}
+ <h4>Draft ${d.requires_human?'<span class="tag">human approval required</span>':''}</h4><textarea id="reply" rows="10" ${['sent','auto_sent'].includes(d.status)?'disabled':''}>${esc(d.reply)}</textarea>
+ <input id="reason" placeholder="Reason for your change (optional)" style="margin-top:.5rem">
+ ${['sent','auto_sent'].includes(d.status)?`<p class="mut">Status: ${esc(d.status)}</p>`:`<button onclick="act('approve')">Approve & send</button><button class="sec" onclick="act('edit')">Send my edited version</button><button class="sec" onclick="act('reject')">Reject, send replacement</button><button class="sec" onclick="act('escalate')">Needs expert</button>`}<div id="msg" class="mut"></div>`}
+async function act(action){try{const r=await api(`/api/drafts/${sel}/review`,{action,finalText:$('reply').value,reason:$('reason').value||undefined,reviewer:'support-agent'});$('msg').textContent=r.edited?'Recorded as edited. Unedited streak reset.':`Sent unedited. Streak for this kind: ${r.kind.consecutiveUnedited}${r.kind.eligible?' — eligible for autonomy trial':''}`;load()}catch(e){$('msg').textContent='Error: '+e.message}}
+function newEmail(){$('dlg').innerHTML=`<h3>Simulate incoming email</h3><input id="f" placeholder="from" value="customer@example.com"><input id="s" placeholder="subject" style="margin-top:.4rem"><textarea id="b" rows="6" placeholder="body" style="margin-top:.4rem"></textarea><button onclick="send_()">Process</button><button class="sec" onclick="$('dlg').close()">Cancel</button><div id="m" class="mut"></div>`;$('dlg').showModal()}
+async function send_(){$('m').textContent='Processing…';try{const r=await api('/api/emails',{from:$('f').value,subject:$('s').value,body:$('b').value});$('dlg').close();await load();open_(r.draftId)}catch(e){$('m').textContent='Error: '+e.message}}
+async function showAuto(){const k=await api('/api/autonomy');$('dlg').innerHTML=`<h3>Autonomy by kind</h3><p class="mut">A kind becomes eligible after 20 unedited drafts in a row. A human must still switch it on. Any edit switches it off.</p>${k.map(s=>`<div class="card"><b>${esc(s.kind)}</b><div class="mut">streak ${s.consecutiveUnedited} · ${s.enabled?'AUTO-SEND ON':s.eligible?'eligible':'manual'} ${s.disabledReason?'· '+esc(s.disabledReason):''}</div>${s.enabled?`<button class="sec" onclick="tog('disable','${esc(s.kind)}')">Turn off</button>`:s.eligible?`<button onclick="tog('enable','${esc(s.kind)}')">Enable trial</button>`:''}</div>`).join('')||'<p class="mut">Nothing yet.</p>'}<button class="sec" onclick="$('dlg').close()">Close</button>`;$('dlg').showModal()}
+async function tog(a,kind){try{await api('/api/autonomy/'+a,{kind,by:'support-lead'})}catch(e){alert(e.message)}showAuto()}
+load();setInterval(load,15000);
+</script></body></html>

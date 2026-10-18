@@ -1,0 +1,24 @@
+Consultant: Welcome, Daniel. You run an online store for handmade furniture, right?
+Daniel: Yes. We sell through our own site. Checkout is the main pain point.
+Consultant: What's wrong with checkout today?
+Daniel: Too many steps. People drop at the address page. I want guest checkout, no forced account creation.
+Consultant: Guest checkout, confirmed?
+Daniel: Absolutely, that's the top priority.
+Consultant: What else?
+Daniel: Order notifications. Customers should get an email when the order ships, and I want an SMS too if possible.
+Consultant: Email is clear. SMS, do you have a provider?
+Daniel: No, I haven't picked one. I just assumed it's easy.
+Consultant: We'd need a provider. I'll note that as a dependency. What about payments?
+Daniel: We use Razorpay now. I want to add Stripe so overseas buyers can pay in dollars.
+Consultant: Does your current plan allow multiple payment gateways?
+Daniel: I have no idea. Can you check?
+Consultant: We'll check. Anything on invoices?
+Daniel: Customers keep asking for GST invoices as PDFs after payment. That would save me hours.
+Consultant: Automatic PDF invoice by email after payment, noted.
+Daniel: Yes. And one more thing, maybe a wishlist feature. Not essential.
+Consultant: Optional then. Timeline?
+Daniel: Festival season starts in October, so ideally everything before that.
+Consultant: Budget range?
+Daniel: Up to around 2,000 dollars total, but only if the work is worth it.
+Consultant: Who handles the Stripe account setup?
+Daniel: I'll create it, my accountant needs to approve though.
